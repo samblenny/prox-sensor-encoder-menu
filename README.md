@@ -7,6 +7,8 @@ single rotary encoder for input and the serial console for output.
 
 ![QT Py ESP32-S3 dev board with rotary encoder and proximity sensor](qtpyS3_VCNL4040.jpeg)
 
+![console screenshot showing menus in use](console-screenshot.jpeg)
+
 
 ## Hardware: Parts and Tools
 
