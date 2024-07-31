@@ -7,8 +7,6 @@ single rotary encoder for input and the serial console for output.
 
 ![QT Py ESP32-S3 dev board with rotary encoder and proximity sensor](qtpyS3_VCNL4040.jpeg)
 
-![console screenshot showing menus in use](console-screenshot.jpeg)
-
 
 ## Hardware: Parts and Tools
 
@@ -57,15 +55,15 @@ selection, click the knob.
 
 There are three menu items:
 
-- "Show Proximity": when selected, this will show the VCNL4040's proximity
+- "Show Proximity": when clicked, this will show the VCNL4040's proximity
   sensor measurement until you click the encoder knob to return to the main
   menu. Turning the knob in this mode has no effect.
 
-- "Show Lux": when selected, this will show the VCNL4040's ambient illumination
+- "Show Lux": when clicked, this will show the VCNL4040's ambient illumination
   sensor measurement until you click the encoder knob to return to the main
   menu. Turning the knob in this mode has no effect.
 
-- "Set Threshold": when selected, this changes the integer value of the
+- "Set Threshold": when clicked, this changes the integer value of the
   proximity threshold setting in the context dictionary. Turning the knob
   updates the threshold immediately, subject to the high and low range limits.
   A proximity value of `2` means a reflective object is about 150 mm to 200 mm
@@ -78,6 +76,11 @@ reflective object in front of the sensor at or below the threshold distance,
 the Neopixel will light up. When you take the object away, the Neopixel will
 turn off. The Neopixel updates work in the main menu and the menu-item modes.
 
+This is a screenshot of a serial console window where I was navigating through
+the menus using the rotary encoder:
+
+![console screenshot showing menus in use](console-screenshot.jpeg)
+
 
 ## Understanding Menu System Code
 
@@ -86,6 +89,21 @@ defined in `code.py`. The menu structure and some other global state are stored
 in a context dictionary called `ctx`, which looks like this:
 
 ```
+# The context dictionary holds shared data used by several
+# functions. You could use a class or individual variables for
+# this. But, for simple prototyping, a dictionary makes it easy
+# to try ideas quickly without typing lots of boilerplate code.
+# You can read about declaring dictionary literals at:
+#   https://docs.python.org/3/library/stdtypes.html#dict
+#
+# For the menu item list, each entry should be a tuple of
+# (name, callable object). The name gets used by the function
+# that prints the current menu selection. The callable object
+# gets used when you pick a menu item. In Python, functions and
+# methods are callable objects. You can call them with a `()`
+# after their name, or you can assign them to variables by
+# omitting the `()`.
+#
 ctx = {
     'menu': [             # Navigation menu
         ('Show Proxmity', showProx),
@@ -133,7 +151,7 @@ readings and return to the main menu (`showProx` and `showLux`) or to edit the
 integer value of a setting (`setThresh`).
 
 
-## Assemble Hardware
+## Assembling the Hardware
 
 1. Attach Qt Py to backplate with M3 machine screws, nuts, and washers
 
@@ -153,7 +171,7 @@ integer value of a setting (`setThresh`).
    and nuts
 
 
-## Update CircuitPython
+## Updating CircuitPython
 
 1. Download the CircuitPython 9.1.1 .UF2 file from the
    [Adafruit QT Py ESP32-S3 No PSRAM](https://circuitpython.org/board/adafruit_qtpy_esp32s3_nopsram/)
@@ -165,18 +183,18 @@ integer value of a setting (`setThresh`).
    CircuitPython 9.1.1
 
 
-## Install CircuitPython Code
-
-First, download the project bundle .zip file from the github releases page or
-the Download Project Bundle button on the Playgrounds guide.
+## Installing CircuitPython Code
 
 To copy the project bundle files to your CIRCUITPY drive:
 
-1. Expand the zip file by opening it, or use `unzip` in a Terminal. You should
+1. Download the project bundle .zip file using the button on the Playground
+   guide or the attachment download link on the GitHub repo Releases page.
+
+2. Expand the zip file by opening it, or use `unzip` in a Terminal. You should
    end up with a folder named prox-sensor-encoder-menu, which should contain a
    `README.txt` file and a `CircuitPython 9.x` folder.
 
-2. Open the CircuitPython 9.x folder and copy all of its contents to your
+3. Open the CircuitPython 9.x folder and copy all of its contents to your
    CIRCUITPY drive.
 
 To learn more about copying libraries to your CIRCUITPY drive, check out the
